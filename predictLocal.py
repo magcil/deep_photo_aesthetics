@@ -16,6 +16,7 @@ model_gpaths = ['14djl57tT21qqi7C2bfxVd19sgb3R6g6T',
                 '11j1-JgfpM-Zxs10W319DwAzskV7mUVsC', 
                 '1hsMUj77niXLu6b1-812R_vrTTx9b5XU3']
 
+
 def download_models(down_path):
     """
     Download models from gdrive
@@ -23,28 +24,28 @@ def download_models(down_path):
     model_paths = [os.path.join(down_path, m) + ".pth" for m in model_names]
     for im, m in enumerate(model_paths):
         if not os.path.isfile(m):
-            gdd.download_file_from_google_drive(file_id=model_gpaths[im], 
-                                                dest_path=m, 
+            gdd.download_file_from_google_drive(file_id=model_gpaths[im],
+                                                dest_path=m,
                                                 unzip=False)
     return model_paths
 
-def model(pretrained, requires_grad, out):
-    model = models.resnet50(progress=True, pretrained=pretrained)
-    # freeze hidden layers
-    if requires_grad == False:
-        for param in model.parameters():
-            param.requires_grad = False
-    # train hidden layers
-    elif requires_grad == True:
-        for param in model.parameters():
-            param.requires_grad = True
+
+def init_model(out):
+    model = models.resnet50()
     model.fc = nn.Linear(2048, out)
     return model
 
+
 def transform_image(image_bytes):
-    my_transforms = transforms.Compose([transforms.Resize((400, 400)),transforms.ToTensor()])
+    my_transforms = transforms.Compose([transforms.Resize((400, 400)),
+                                        transforms.ToTensor()])
     image = Image.open(io.BytesIO(image_bytes))
     return my_transforms(image).unsqueeze(0)
+
+
+#def get_prediction(model, model_name, image_bytes):
+
+
 
 def get_color_prediction(image_bytes):
     classes = np.array(['Black and White', 'Colorful'])
@@ -59,6 +60,9 @@ def get_color_prediction(image_bytes):
         predicted += f'{classes[best_indices[i]]} -> {best_proba[i]}' # workaround to open fix -> https://github.com/pytorch/pytorch/issues/65908
     return predicted
 
+
+
+
 def get_dof_prediction(image_bytes):
     classes = np.array(['Shallow', 'Deep'])
     outputs = modelDoF(transform_image(image_bytes=image_bytes))
@@ -71,6 +75,7 @@ def get_dof_prediction(image_bytes):
     for i in range(len(best_indices)):
         predicted += f'{classes[best_indices[i]]} -> {best_proba[i]}' # workaround to open fix -> https://github.com/pytorch/pytorch/issues/65908
     return predicted
+
 
 def get_palette_prediction(image_bytes):
     classes = np.array(['Gray', 'Yellow', 'Orange', 'White', 'Violet', 'Red', 'Blue', 'Green', 'Human Skin', 'Brown', 'Pink', 'Black', 'Other'])
@@ -85,6 +90,7 @@ def get_palette_prediction(image_bytes):
        predicted.append(f'{classes[best_indices[i]]} -> {best_proba[i]}') # workaround to open fix -> https://github.com/pytorch/pytorch/issues/65908
     return predicted
 
+
 def get_composition_prediction(image_bytes):
     classes = np.array(['Rule of Thirds', 'Centered', 'Undefined', 'Leading Lines', 'Frame within Frame', 'Minimal', 'Filling the Frame',
         'Diagonals and Triangles', 'Patterns and Textures', 'Symmetrical'])
@@ -98,6 +104,7 @@ def get_composition_prediction(image_bytes):
     for i in range(len(best_indices)):
        predicted.append(f'{classes[best_indices[i]]} -> {best_proba[i]}') # workaround to open fix -> https://github.com/pytorch/pytorch/issues/65908
     return predicted
+
 
 def get_type_prediction(image_bytes):
     classes = np.array(['Street', 'Pet', 'Other', 'Event', 'Portrait', 'Flora', 'Aerial', 'Documentary', 'Commercial', 'Night','Architectural',
@@ -138,31 +145,31 @@ if __name__ == '__main__':
 
 
     ### COLOR ###
-    modelColor = model(pretrained=False, requires_grad=False, out=2).to(device)
+    modelColor = init_model(out=2).to(device)
     checkpointColor = torch.load(model_paths[0])
     modelColor.load_state_dict(checkpointColor['model_state_dict'])
     modelColor.eval()
     ### COLOR ###
     ### DEAPTH OF FIELD ###
-    modelDoF = model(pretrained=False, requires_grad=False, out=2).to(device)
+    modelDoF = init_model(out=2).to(device)
     checkpointDoF = torch.load(model_paths[2])
     modelDoF.load_state_dict(checkpointDoF['model_state_dict'])
     modelDoF.eval()
     ### DEAPTH OF FIELD ###
     ### PALETTE ###
-    modelPalette = model(pretrained=False, requires_grad=False, out=13).to(device)
+    modelPalette = init_model(out=13).to(device)
     checkpointPalette = torch.load(model_paths[3])
     modelPalette.load_state_dict(checkpointPalette['model_state_dict'])
     modelPalette.eval()
     ### PALETTE ###
     ### COMPOSITION ###
-    modelComposition = model(pretrained=False, requires_grad=False, out=10).to(device)
+    modelComposition = init_model(out=10).to(device)
     checkpointComposition = torch.load(model_paths[1])
     modelComposition.load_state_dict(checkpointComposition['model_state_dict'])
     modelComposition.eval()
     ### COMPOSITION ###
     ### TYPE ###
-    modelType = model(pretrained=False, requires_grad=False, out=21).to(device)
+    modelType = init_model(out=21).to(device)
     # checkpointType = torch.load('/home/mike/DataspellProjects/PhotographyStyleAnalysis/outputs/model/modelType.pth')
     checkpointType = torch.load(model_paths[4])
     modelType.load_state_dict(checkpointType['model_state_dict'])
