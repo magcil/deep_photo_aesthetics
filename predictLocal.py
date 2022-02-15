@@ -7,7 +7,7 @@ from torchvision import models as torchmodels
 import torchvision.transforms as transforms
 import torch.nn as nn
 import os
-from google_drive_downloader import GoogleDriveDownloader as gdd 
+from google_drive_downloader import GoogleDriveDownloader as gdd
 
 
 models = {
@@ -46,7 +46,7 @@ models = {
                             'Food', 'Cityscape', 'Wedding', 'Underwater']
         }
     }
-                
+
 
 def download_models(down_path):
     """
@@ -64,20 +64,28 @@ def download_models(down_path):
 
 
 def init_model(out):
+    """
+    Load network architecture
+    """
     model = torchmodels.resnet50()
     model.fc = nn.Linear(2048, out)
     return model
 
 
 def transform_image(image_bytes):
+    """
+    Resize and unsqueeze image
+    """
     my_transforms = transforms.Compose([transforms.Resize((400, 400)),
                                         transforms.ToTensor()])
     image = Image.open(io.BytesIO(image_bytes))
     return my_transforms(image).unsqueeze(0)
 
 
-
-def get_prediction(model, class_names, image_bytes):
+def get_prediction(model, image_bytes):
+    """
+    Get model predictions
+    """
     outputs = model(transform_image(image_bytes=image_bytes))
     outputs = torch.sigmoid(outputs)
     outputs = outputs.detach().cpu()
@@ -89,8 +97,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--input', nargs='+', type=str,
-                        required=True, help='Image data'
-                        )
+                        required=True, help='Image data')
+
     args = parser.parse_args()
 
     input_data = args.input
@@ -119,9 +127,6 @@ if __name__ == '__main__':
         checkpointColor = torch.load(models[model_name]['path'])
         cur_model.load_state_dict(checkpointColor['model_state_dict'])
         cur_model.eval()
-
-        s_prob, s_class_i = get_prediction(cur_model,
-                                           class_names,
-                                           img_bytes)
+        s_prob, s_class_i = get_prediction(cur_model, img_bytes)
         print(f'Predicted {model_name}: {class_names[int(s_class_i[0])]}')
 
