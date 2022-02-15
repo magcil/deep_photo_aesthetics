@@ -126,5 +126,5 @@ if __name__ == '__main__':
         cur_model.load_state_dict(checkpointColor['model_state_dict'])
         cur_model.eval()
         s_prob, s_class_i = get_prediction(cur_model, img_bytes)
-        print(f'Predicted {model_name}: {class_names[int(s_class_i[0])]}')
-
+        for i in range(len(s_prob)):
+            print(f'Predicted {model_name}: {class_names[int(s_class_i[i])]} {s_prob[i]}')
