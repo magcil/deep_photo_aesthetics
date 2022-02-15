@@ -111,9 +111,7 @@ if __name__ == '__main__':
 
     imagePath = input_data[0]
 
-    if (imagePath.endswith('.png') or imagePath.endswith('.jpg') or imagePath.endswith('.jpeg')):
-        print('')
-    else:
+    if not (imagePath.endswith('.jpg') or imagePath.endswith('.jpeg')):
         print("Image extension not acceptable. Terminating..")
         exit()
 
