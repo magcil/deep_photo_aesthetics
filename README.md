@@ -30,5 +30,5 @@ Type
 	Cityscape 0.10748865455389023
 ```
 
-`predict_local.py` downloads the model the first time it is called, but uou can also find the pretrained models here:
-https://drive.google.com/drive/folders/1e17hCGWfE7UyxkUDXCTCnJEmzRpTvJbi?usp=sharing
+`predict_local.py` downloads the model the first time it is called, but you can also find the pretrained models here:
+https://drive.google.com/drive/folders/13vd2JQ6wsvKuTovoOc_TjWwzCdDcIHIi?usp=sharing
