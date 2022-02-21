@@ -13,37 +13,37 @@ from google_drive_downloader import GoogleDriveDownloader as gdd
 models = {
     'Color':
         {
-            'gpath': '14djl57tT21qqi7C2bfxVd19sgb3R6g6T',
-            'class_names': ['Black and White', 'Colorful']
+            'gpath': '1KcCQTdjj6rtiZsDvQ-nlBH1ceEQJIRRr',  #14djl57tT21qqi7C2bfxVd19sgb3R6g6T
+            'class_names': ['Colorful', 'Black and White']
         },
     'Composition':
         {
-            'gpath': '1dtXUTLR3f0iF-Ez9ElVt0ppyOEh8iRDJ',
-            'class_names': ['Rule of Thirds', 'Centered', 'Undefined',
+            'gpath': '1e9qumib13wpoWuDR2WIZBUGO-eTCjJbN',  #1dtXUTLR3f0iF-Ez9ElVt0ppyOEh8iRDJ
+            'class_names': ['Centered', 'Undefined', 'Rule of Thirds',
                             'Leading Lines', 'Frame within Frame', 'Minimal',
-                            'Filling the Frame', 'Diagonals and Triangles',
-                            'Patterns and Textures', 'Symmetrical']
+                            'Patterns and Textures', 'Filling the Frame',
+                            'Diagonals and Triangles', 'Symmetrical']
         },
     'DoF':
         {
-            'gpath': '1iojCerM7bvChFHwn5MtiG_jFAYBYkGWw',
+            'gpath': '1zfroWUV3YcsQzEMWC0mSAjrpKBds6Xc4',  #1iojCerM7bvChFHwn5MtiG_jFAYBYkGWw
             'class_names': ['Shallow', 'Deep']
         },
     'Palette':
         {
-            'gpath': '11j1-JgfpM-Zxs10W319DwAzskV7mUVsC',
-            'class_names': ['Gray', 'Yellow', 'Orange', 'White', 'Violet',
-                            'Red', 'Blue', 'Green', 'Human Skin', 'Brown',
-                            'Pink', 'Black', 'Other']
+            'gpath': '1on3avBQhe2JRScy604e22rqTCh_79i5v',  #11j1-JgfpM-Zxs10W319DwAzskV7mUVsC
+            'class_names': ['Yellow', 'Blue', 'Brown', 'Green', 'Gray',
+                            'Orange', 'White', 'Black', 'Red', 'Human Skin',
+                            'Pink', 'Other', 'Violet']
         },
     'Type':
         {
-            'gpath': '1hsMUj77niXLu6b1-812R_vrTTx9b5XU3',
-            'class_names': ['Street', 'Pet', 'Other', 'Event', 'Portrait',
-                            'Flora', 'Aerial', 'Documentary', 'Commercial',
-                            'Night', 'Architectural', 'Macro', 'Sports',
-                            'Landscape', 'Fashion', 'Wildlife', 'Astro',
-                            'Food', 'Cityscape', 'Wedding', 'Underwater']
+            'gpath': '11xM2193vwXZxuUnlAlGPlUq67cFp6nMh',  #1hsMUj77niXLu6b1-812R_vrTTx9b5XU3
+            'class_names': ['Landscape', 'Other', 'Aerial', 'Pet', 'Portrait',
+                            'Commercial', 'Street', 'Flora', 'Food',
+                            'Wildlife', 'Astro', 'Fashion', 'Macro',
+                            'Cityscape', 'Night', 'Sports', 'Wedding',
+                            'Architectural', 'Underwater', 'Event', 'Documentary']
         }
     }
 
